@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CIAMA IL DU - BRISCULUN</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .participant-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .participant-row input[type="text"] {
+            width: 150px;
+            padding: 5px;
+            margin-right: 10px;
+        }
+
+        .participant-row button {
+            padding: 5px 10px;
+            margin-right: 5px;
+            font-size: 16px;
+        }
+
+        .score-box {
+            width: 50px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Gestione Punteggio Partecipanti</h2>
+
+    <div id="participants">
+        <!-- Righe dei partecipanti -->
+    </div>
+
+    <script>
+        // Numero di partecipanti
+        const numParticipants = 5;
+
+        // Funzione per creare ogni riga
+        function createParticipantRow(index) {
+            // Creazione degli elementi
+            const row = document.createElement('div');
+            row.className = 'participant-row';
+
+            const nameInput = document.createElement('input');
+            nameInput.type = 'text';
+            nameInput.placeholder = `Partecipante ${index + 1}`;
+
+            const buttons = [
+                { value: '+2', score: 2 },
+                { value: '+1', score: 1 },
+                { value: '-1', score: -1 },
+                { value: '-2', score: -2 }
+            ];
+
+            const scoreBox = document.createElement('div');
+            scoreBox.className = 'score-box';
+            scoreBox.textContent = '0';
+
+            // Aggiunge i pulsanti
+            buttons.forEach(buttonInfo => {
+                const button = document.createElement('button');
+                button.textContent = buttonInfo.value;
+                button.addEventListener('click', () => {
+                    let currentScore = parseInt(scoreBox.textContent, 10);
+                    currentScore += buttonInfo.score;
+                    scoreBox.textContent = currentScore;
+                });
+                row.appendChild(button);
+            });
+
+            // Aggiunge gli elementi alla riga
+            row.appendChild(nameInput);
+            row.appendChild(scoreBox);
+
+            return row;
+        }
+
+        // Aggiunge le righe dei partecipanti
+        const participantsContainer = document.getElementById('participants');
+        for (let i = 0; i < numParticipants; i++) {
+            const row = createParticipantRow(i);
+            participantsContainer.appendChild(row);
+        }
+    </script>
+
+</body>
+</html>
